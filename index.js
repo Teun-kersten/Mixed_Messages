@@ -4,23 +4,101 @@
 const character = ['knight', 'ghost', 'wizard', 'pirate', 'alien', 'gnome', 'forest critter', 'dragon', 'robot',
      'rogue'];
 // the second dataset consists of the different actions a character can do
-const action = ['attacks', 'posesses you', 'tries to turn you into a strawberry', 'plunders your booty', 
-    'tries to abduct you', 'offers you a magic mushroom', 'tries to gnaw at your ankles', 
-    'spews fire at you', 'tries to disassemble you', 'tries to take your coin purse'];
+const action = {
+  knight: ['attacks'],
+  ghost: ['posesses you'],
+  wizard: ['tries to turn you into a strawberry'],
+  pirate: ['plunders your booty'],
+  alien: ['tries to abduct you'],
+  gnome: ['offers you a magic mushroom'],
+  'forest critter': ['tries to gnaw at your ankles'],
+  dragon: ['spews fire at you'],
+  robot: ['tries to disassemble you'],
+  rogue: ['tries to take your coin purse']
+};
+
 // the third dataset consist of the counteractions the user can do
 const response = ['charm', 'persuade', 'intimidate', 'barter', 'flee'];
 // the fourth dataser consists of a D20 die roll
 const roll = () => Math.floor(Math.random() * 20) + 1;
 // the fifth dataset consists of the messages as a result of the die roll
-const result = ['a wave of stagefright washes over you and you freeze in place', 'you say a line so cheesy everyone around you physically cringers',
-    'you blow a kiss and wink', 'you pretend to yawn and stretch, placing your hand on their shoulder and go for a hug',
-    'you try to reason but your voice cracks, ending your effort before it even started', 'your attempt to persuade them isn\'t enough',
-    'you manage to convince them to leave you alone', 'Your words are so insightful you leave them speechless',
-'you think back to your boyscout days and make yourself look bigger, it doesn\'t work', 'you bang your chest and roar, but they are not impressed',
-'you threaten them with your dagger, which is just enough to make them stop', 'you call out a "whoa there buster" and point, at which exact moment lighning strikes a nearby tree, sending them running away in terror',
-'you reach for your coin purse to bribe them, only to realise you left it at home', 'the amount of coins in your purse is not enough to sway them',
-'you offer them your coin purse, which is enough for them to leave you be', 'You make them an offer they can\'t refuse',
-'you turn around but trip over your own shoelaces', 'you try to run but aren\'t fast enough', 'you quickly make your escape', 'you dissapear in a cloud of smoke'];
+const result = {
+  charm: {
+    critFail: [
+      'a wave of stagefright washes over you and you freeze in place'
+    ],
+    fail: [
+      'you say a line so cheesy everyone around you physically cringers'
+    ],
+    success: [
+      'you blow a kiss and wink'
+    ],
+    nat20: [
+      'you pretend to yawn and stretch, placing your hand on their shoulder and go for a hug'
+    ]
+  },
+
+  persuade: {
+    critFail: [
+      'you try to reason but your voice cracks, ending your effort before it even started'
+    ],
+    fail: [
+      'your attempt to persuade them isn\'t enough'
+    ],
+    success: [
+      'you manage to convince them to leave you alone'
+    ],
+    nat20: [
+      'Your words are so insightful you leave them speechless'
+    ]
+  },
+
+  intimidate: {
+    critFail: [
+      'you think back to your boyscout days and make yourself look bigger, it doesn\'t work'
+    ],
+    fail: [
+      'you bang your chest and roar, but they are not impressed'
+    ],
+    success: [
+      'you threaten them with your dagger, which is just enough to make them stop'
+    ],
+    nat20: [
+      'you call out a "whoa there buster" and point, at which exact moment lighning strikes a nearby tree, sending them running away in terror'
+    ]
+  },
+
+  barter: {
+    critFail: [
+      'you reach for your coin purse to bribe them, only to realise you left it at home'
+    ],
+    fail: [
+      'the amount of coins in your purse is not enough to sway them'
+    ],
+    success: [
+      'you offer them your coin purse, which is enough for them to leave you be'
+    ],
+    nat20: [
+      'You make them an offer they can\'t refuse'
+    ]
+  },
+
+  flee: {
+    critFail: [
+      'you turn around but trip over your own shoelaces'
+    ],
+    fail: [
+      'you try to run but aren\'t fast enough'
+    ],
+    success: [
+      'you quickly make your escape'
+    ],
+    nat20: [
+      'you dissapear in a cloud of smoke'
+    ]
+  }
+};
+
 // the sixth and final dataset consists of the wrap up message that concludes the adventure
 const finale = {
   knight: {
@@ -184,5 +262,12 @@ const rollType = (roll) => {
 const randomPicker = arr => arr[Math.floor(Math.random() * arr.length)];
 // this function will generate the random message by picking a random element from each dataset and combining them into one string
 const randomMessage = () => {
-
+    const chosenCharacter = randomPicker(character);
+    const chosenAction = randomPicker(action[chosenCharacter]);
+    const chosenResponse = randomPicker(response);
+    const dieRoll = roll();
+    const chosenResult = randomPicker(result[chosenResponse][rollType(dieRoll)]);
+    const finaleMessage = randomPicker(finale[chosenCharacter][rollType(dieRoll)]);
+    return `A ${chosenCharacter} ${chosenAction}. You try to ${chosenResponse}. You roll a ${dieRoll} and ${chosenResult}. ${finaleMessage}`;
 };
+console.log(randomMessage());
