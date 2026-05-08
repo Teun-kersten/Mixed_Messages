@@ -1,5 +1,7 @@
 /*for this project the challenge was to create random mixed messages function that uses at least three different 
- pieces of data. I will be using six different data sets spread out into multiple arrays. */
+ pieces of data. I will be using six different data sets spread out into multiple arrays.
+ throughout the code the choice has been made to create object arrays to increase readability and to make it 
+ more practical to access the datapoints for the randomPicker and the eventual final message */
 // the first dataset concists of the different characters the user will be able to encounter
 const character = ['knight', 'ghost', 'wizard', 'pirate', 'alien', 'gnome', 'forest critter', 'dragon', 'robot',
      'rogue'];
