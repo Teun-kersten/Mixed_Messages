@@ -5,7 +5,8 @@
 // the first dataset concists of the different characters the user will be able to encounter
 const character = ['knight', 'ghost', 'wizard', 'pirate', 'alien', 'gnome', 'forest critter', 'dragon', 'robot',
      'rogue'];
-// the second dataset consists of the different actions a character can do
+// the second dataset consists of the different actions a character can do, each character has a unique action, so we use an object to link the characters to their actoins.
+// this is also more practical if we want to add more characters, or increase the number of actions a character can do in the future
 const action = {
   knight: ['attacks'],
   ghost: ['posesses you'],
@@ -23,7 +24,9 @@ const action = {
 const response = ['charm', 'persuade', 'intimidate', 'barter', 'flee'];
 // the fourth dataser consists of a D20 die roll
 const roll = () => Math.floor(Math.random() * 20) + 1;
-// the fifth dataset consists of the messages as a result of the die roll
+/*the fifth dataset consists of the messages as a result of the die roll
+the same structure has been chosen as before, this increases the functionality of randomPicker, and it also makes
+the code more maintainable for the future*/
 const result = {
   charm: {
     critFail: [
@@ -101,7 +104,7 @@ const result = {
   }
 };
 
-// the sixth and final dataset consists of the wrap up message that concludes the adventure
+// the sixth and final dataset consists of the wrap up message that concludes the adventure, again using the same structure we've seen throughout the project
 const finale = {
   knight: {
     critFail: [
@@ -253,7 +256,10 @@ const finale = {
     ]
   }
 };
-// this function will decide what outcome to choose based on the die roll
+/** this function will decide what outcome to choose based on the die roll 
+ the structure of the function is based on the standard D20 roll outcomes, where a roll of 1 is a critical failure, so an automatic loss,
+ a low roll between 2 and 11 is a failure, a roll between 12 and 19 is a success, and a roll of 20, or nat 20, is a 'critical succes',
+ therefor gaining an extra special outcome*/
 const rollType = (roll) => {
     if (roll === 1) { return 'critFail'; }
     if (roll >= 2 && roll <= 11) { return 'fail'; }
